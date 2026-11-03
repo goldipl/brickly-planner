@@ -131,12 +131,13 @@
   svg { width: 20px; height: 20px; }
 }
 
+// ikona pokazuje motyw, na który przełączy kliknięcie: w ciemnym słońce, w jasnym księżyc
 .theme-toggle {
-  .moon { display: none; }
+  .sun { display: none; }
 
   :root[data-theme='dark'] & {
-    .sun { display: none; }
-    .moon { display: block; }
+    .sun { display: block; }
+    .moon { display: none; }
   }
 }
 
