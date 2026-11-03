@@ -263,6 +263,10 @@
   h2 { color: inherit; margin-bottom: .3em; }
   p { color: inherit; opacity: .8; margin: 0; }
 
+  // treść nad dekoracją, żeby przycisk zawsze był klikalny
+  > * { position: relative; z-index: 1; }
+
+  // dekoracyjne cegiełki w rogu — nie mogą przechwytywać kliknięć
   &::after {
     content: '';
     position: absolute;
@@ -271,6 +275,8 @@
     width: 260px;
     height: 140px;
     opacity: .16;
+    pointer-events: none;
+    z-index: 0;
     background:
       linear-gradient(var(--brick), var(--brick)) 0 0 / 160px 30px no-repeat,
       linear-gradient(var(--amber), var(--amber)) 60px 46px / 160px 30px no-repeat,
