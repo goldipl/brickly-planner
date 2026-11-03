@@ -6,8 +6,8 @@ $hero-ink: #0E1117;
 $ease-out: cubic-bezier(.2, .8, .2, 1);
 $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 
-@mixin mono-caps($size: .7rem) {
-  font: 500 #{$size}/1.2 var(--font-mono);
+@mixin caption-caps($size: .7rem) {
+  font: 600 #{$size}/1.2 var(--font-label);
   text-transform: uppercase;
   letter-spacing: .14em;
 }
@@ -100,9 +100,9 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 .hero-title {
   margin: 0 0 20px;
   color: #FFF;
-  font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+  font-size: clamp(2.7rem, 5.4vw, 4.8rem);
   line-height: .98;
-  letter-spacing: -.035em;
+  letter-spacing: -.01em;
   font-weight: 800;
 
   .line {
@@ -139,7 +139,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 }
 
 .hero-kicker {
-  @include mono-caps(.72rem);
+  @include caption-caps(.72rem);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -186,7 +186,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   position: absolute;
   right: 20px;
   bottom: 14px;
-  @include mono-caps(.62rem);
+  @include caption-caps(.62rem);
   color: rgba(255, 255, 255, .55);
   text-decoration: none;
 
@@ -274,7 +274,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   margin-bottom: 14px;
 
   > span {
-    @include mono-caps(.68rem);
+    @include caption-caps(.68rem);
     color: rgba(244, 239, 232, .6);
   }
 
@@ -367,19 +367,19 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 
   strong {
     font: 800 clamp(1.9rem, 3.4vw, 2.3rem)/1 var(--font-head);
-    letter-spacing: -.03em;
+    letter-spacing: -.01em;
     color: #FFF;
     font-variant-numeric: tabular-nums;
   }
 }
 
 .quick-caption {
-  @include mono-caps(.66rem);
+  @include caption-caps(.66rem);
   color: #F2A93B;
 }
 
 .quick-meta {
-  font: 500 .82rem/1.3 var(--font-mono);
+  font: 500 .82rem/1.3 var(--font-label);
   color: rgba(244, 239, 232, .62);
 }
 
@@ -472,7 +472,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   display: grid;
   place-items: start center;
   padding: 11px 9px 0;
-  font: 600 .7rem/1 var(--font-mono);
+  font: 600 .7rem/1 var(--font-label);
   color: #FFF;
   background: #C8553D;
   letter-spacing: .04em;
@@ -485,14 +485,14 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 }
 
 .annotation-label {
-  @include mono-caps(.6rem);
+  @include caption-caps(.6rem);
   color: rgba(244, 239, 232, .62);
   white-space: nowrap;
 }
 
 .annotation-value {
   font: 800 1.3rem/1.05 var(--font-head);
-  letter-spacing: -.02em;
+  letter-spacing: -.01em;
   color: #FFF;
   font-variant-numeric: tabular-nums;
 }
@@ -501,7 +501,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   margin-top: 3px;
   padding-top: 6px;
   border-top: 1px dashed rgba(255, 255, 255, .14);
-  font: 400 .68rem/1.35 var(--font-mono);
+  font: 400 .68rem/1.35 var(--font-label);
   color: #F2A93B;
 }
 
@@ -523,7 +523,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   align-items: center;
   gap: 10px;
   padding: 0 20px;
-  @include mono-caps(.68rem);
+  @include caption-caps(.68rem);
   color: #F2A93B;
   background: #161B24;
   border-right: 1px solid rgba(255, 255, 255, .08);
@@ -578,7 +578,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
     &:nth-child(3n)::before { background: rgba(255, 255, 255, .5); }
 
     span { color: rgba(244, 239, 232, .7); }
-    b { font: 600 .86rem/1 var(--font-mono); color: #FFF; }
+    b { font: 600 .86rem/1 var(--font-label); color: #FFF; }
   }
 }
 
@@ -627,7 +627,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 
     &::before {
       content: counter(out, decimal-leading-zero);
-      font: 600 .8rem/1 var(--font-mono);
+      font: 600 .8rem/1 var(--font-label);
       color: var(--brick);
       padding-top: 5px;
       border-top: 2px solid var(--brick);

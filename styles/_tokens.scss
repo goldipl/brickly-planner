@@ -71,9 +71,10 @@ $dark: (
   --bar-outdoor: var(--brick);
   --bar-done: var(--sage);
   --focus: #F2A93B;
-  --font-head: var(--ff-head), 'Segoe UI', system-ui, sans-serif;
-  --font-body: var(--ff-body), 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-mono: var(--ff-mono), ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-head: var(--ff-head), 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  --font-body: var(--ff-body), Roboto, Arial, sans-serif;
+  // etykiety, liczby i podpisy: wąski krój jak na obi.pl (z cyframi tabelarycznymi tam, gdzie trzeba)
+  --font-label: var(--ff-head), 'Roboto Condensed', 'Arial Narrow', sans-serif;
   --r-sm: 8px;
   --r: 14px;
   --r-lg: 22px;

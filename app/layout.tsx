@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google';
+import { Roboto, Roboto_Condensed } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -8,9 +8,9 @@ import { ToastHost } from '@/components/ToastHost';
 import { OG_IMAGE, SITE_NAME, SITE_URL, asset } from '@/lib/site';
 import '@/styles/globals.scss';
 
-const head = Bricolage_Grotesque({ subsets: ['latin', 'latin-ext'], variable: '--ff-head', display: 'swap' });
-const body = Inter({ subsets: ['latin', 'latin-ext'], variable: '--ff-body', display: 'swap' });
-const mono = JetBrains_Mono({ subsets: ['latin', 'latin-ext'], variable: '--ff-mono', display: 'swap', weight: ['400', '500', '600'] });
+// typografia w stylu obi.pl: wąski grotesk w nagłówkach i etykietach, Roboto w interfejsie
+const head = Roboto_Condensed({ subsets: ['latin', 'latin-ext'], variable: '--ff-head', display: 'swap' });
+const body = Roboto({ subsets: ['latin', 'latin-ext'], variable: '--ff-body', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL + '/'),
@@ -55,7 +55,7 @@ const themeScript = `document.documentElement.classList.add('js');try{var t=loca
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pl" className={`${head.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="pl" className={`${head.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

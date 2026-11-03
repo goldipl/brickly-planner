@@ -5,5 +5,5 @@
     <rect x="17" y="32" width="18" height="6" rx="2" fill="#C8553D"/>
     <rect x="25" y="40" width="14" height="6" rx="2" fill="#F2A93B"/>
   </g>
-  <text x="56" y="38" font-family="'Bricolage Grotesque','Segoe UI',Arial,sans-serif" font-size="28" font-weight="800" fill="#1D2433" letter-spacing="-0.5">Brickly<tspan font-weight="500" fill="#C8553D" dx="6">Planner</tspan></text>
+  <text x="56" y="38" font-family="'Roboto Condensed','Arial Narrow',Arial,sans-serif" font-size="28" font-weight="800" fill="#1D2433" letter-spacing="0">Brickly<tspan font-weight="500" fill="#C8553D" dx="6">Planner</tspan></text>
 </svg>

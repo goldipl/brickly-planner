@@ -7,11 +7,11 @@
     <rect x="17" y="32" width="18" height="6" rx="2" fill="#C8553D"/>
     <rect x="25" y="40" width="14" height="6" rx="2" fill="#F2A93B"/>
   </g>
-  <text x="230" y="185" font-family="'Bricolage Grotesque','Segoe UI',Arial,sans-serif" font-size="76" font-weight="800" fill="#1D2433" letter-spacing="-2">Brickly <tspan font-weight="500" fill="#C8553D">Planner</tspan></text>
-  <text x="80" y="320" font-family="'Bricolage Grotesque','Segoe UI',Arial,sans-serif" font-size="54" font-weight="700" fill="#1D2433" letter-spacing="-1">Kosztorys i harmonogram budowy</text>
-  <text x="80" y="385" font-family="'Bricolage Grotesque','Segoe UI',Arial,sans-serif" font-size="54" font-weight="700" fill="#1D2433" letter-spacing="-1">domu oraz remontu mieszkania</text>
-  <text x="80" y="460" font-family="Inter,'Segoe UI',Arial,sans-serif" font-size="30" fill="#5E6676">Aktualne ceny materiałów i robocizny w Polsce · za darmo</text>
-  <g font-family="Inter,'Segoe UI',Arial,sans-serif" font-size="26" fill="#FFFFFF">
+  <text x="230" y="185" font-family="'Roboto Condensed','Arial Narrow',Arial,sans-serif" font-size="76" font-weight="800" fill="#1D2433" letter-spacing="-0.5">Brickly <tspan font-weight="500" fill="#C8553D">Planner</tspan></text>
+  <text x="80" y="320" font-family="'Roboto Condensed','Arial Narrow',Arial,sans-serif" font-size="54" font-weight="700" fill="#1D2433" letter-spacing="0">Kosztorys i harmonogram budowy</text>
+  <text x="80" y="385" font-family="'Roboto Condensed','Arial Narrow',Arial,sans-serif" font-size="54" font-weight="700" fill="#1D2433" letter-spacing="0">domu oraz remontu mieszkania</text>
+  <text x="80" y="460" font-family="Roboto,Arial,sans-serif" font-size="30" fill="#5E6676">Aktualne ceny materiałów i robocizny w Polsce · za darmo</text>
+  <g font-family="Roboto,Arial,sans-serif" font-size="26" fill="#FFFFFF">
     <text x="80" y="604">brickly-planner.pl</text>
   </g>
   <g transform="translate(870 62)">
