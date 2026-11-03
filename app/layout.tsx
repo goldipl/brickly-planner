@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/Seo';
 import { ToastHost } from '@/components/ToastHost';
-import { OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site';
+import { OG_IMAGE, SITE_NAME, SITE_URL, asset } from '@/lib/site';
 import '@/styles/globals.scss';
 
 const head = Bricolage_Grotesque({ subsets: ['latin', 'latin-ext'], variable: '--ff-head', display: 'swap' });
@@ -13,7 +13,7 @@ const body = Inter({ subsets: ['latin', 'latin-ext'], variable: '--ff-body', dis
 const mono = JetBrains_Mono({ subsets: ['latin', 'latin-ext'], variable: '--ff-mono', display: 'swap', weight: ['400', '500', '600'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(SITE_URL + '/'),
   title: {
     default: 'Brickly Planner – kosztorys i harmonogram budowy domu oraz remontu mieszkania',
     template: '%s | Brickly Planner',
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', images: [OG_IMAGE.url] },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: asset('/favicon.ico'), sizes: '16x16 32x32 48x48' },
+      { url: asset('/icon.svg'), type: 'image/svg+xml' },
+      { url: asset('/icons/icon-192.png'), sizes: '192x192', type: 'image/png' },
     ],
-    apple: [120, 152, 167, 180].map((s) => ({ url: `/icons/apple-touch-icon-${s}.png`, sizes: `${s}x${s}`, type: 'image/png' })),
+    apple: [120, 152, 167, 180].map((s) => ({ url: asset(`/icons/apple-touch-icon-${s}.png`), sizes: `${s}x${s}`, type: 'image/png' })),
   },
   // dodanie do ekranu początkowego iOS: krótka nazwa pod ikoną i pasek statusu nad ciemnym tłem
   appleWebApp: { capable: true, title: 'Brickly', statusBarStyle: 'black-translucent' },

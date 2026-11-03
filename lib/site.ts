@@ -1,7 +1,16 @@
 import type { Metadata } from 'next';
 
-/** Docelowa domena — zmień tutaj lub ustaw zmienną NEXT_PUBLIC_SITE_URL przy buildzie. */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://brickly-planner.pl').replace(/\/$/, '');
+/**
+ * Pełny adres strony (z podkatalogiem, jeśli jest) — zmień tutaj lub ustaw NEXT_PUBLIC_SITE_URL przy buildzie.
+ * Na GitHub Pages: https://goldipl.github.io/brickly-planner
+ */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://brickly-planner.pl').replace(/\/$/, '');
+
+/** Podkatalog, w którym działa strona (GitHub Pages: /brickly-planner), pusty dla własnej domeny. */
+export const BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '');
+
+/** Ścieżka do pliku z public/ — <img>, ikony i manifest nie dostają basePath automatycznie. */
+export const asset = (path: string) => BASE_PATH + path;
 export const SITE_NAME = 'Brickly Planner';
 export const PUBLISHED = '2026-11-03';
 
@@ -34,8 +43,10 @@ export const ARTICLES = [
   },
 ];
 
+export const absolute = (path: string) => SITE_URL + path;
+
 export const OG_IMAGE = {
-  url: '/og-image.png',
+  url: absolute('/og-image.png'),
   width: 1200,
   height: 630,
   alt: 'Brickly Planner – kosztorys i harmonogram budowy domu oraz remontu mieszkania',
@@ -48,10 +59,11 @@ export function pageMetadata({ title, description, path, type = 'website', ogTit
   return {
     title,
     description,
-    alternates: { canonical: path },
+    // pełne adresy: metadataBase z podkatalogiem gubiłby ścieżkę przy względnych URL-ach
+    alternates: { canonical: absolute(path) },
     openGraph: {
       type,
-      url: path,
+      url: absolute(path),
       title: ogTitle ?? title,
       description,
       siteName: SITE_NAME,
@@ -62,4 +74,3 @@ export function pageMetadata({ title, description, path, type = 'website', ogTit
   };
 }
 
-export const absolute = (path: string) => SITE_URL + path;

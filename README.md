@@ -1,70 +1,93 @@
 # Brickly Planner
 
-Aplikacja webowa do planowania i harmonogramowania budowy domu oraz remontu mieszkania.
-Na podstawie kilku parametrów przygotowuje **kosztorys pozycja po pozycji**, **harmonogram prac (wykres Gantta)**
-i **plan wydatków miesiąc po miesiącu**, korzystając z aktualnych cen materiałów i robocizny w Polsce (stan: listopad 2026).
+A web app for planning and scheduling house construction and apartment renovation in Poland.
+From a few inputs it builds an **itemised cost estimate**, a **work schedule (Gantt chart)** and a **month-by-month spending plan**,
+based on current Polish prices for materials and labour (price level: November 2026).
 
-## Funkcje
+The user interface and content are in Polish, since the app targets the Polish market.
 
-- **Kalkulator budowy domu**: zakres od SSO do „pod klucz”, bryła, technologia ścian, fundamenty, dach, ogrzewanie, rekuperacja, PV, przyłącza, formalności, 16 województw.
-- **Kalkulator remontu mieszkania**: 4 gotowe zakresy i 18 rodzajów prac, blok, kamienica lub nowe budownictwo.
-- **Harmonogram** w dniach roboczych, z zależnościami etapów, przerwami technologicznymi (beton, wylewki), przerwą zimową i czasem produkcji okien i kuchni.
-- **Planer**: projekty w localStorage, edycja zadań, automatyczne przesuwanie zadań zależnych, budżet planowany kontra wydany, postęp, import i eksport JSON, eksport CSV (Excel), druk do PDF.
-- **Cennik budowlany 2026**: ceny jednostkowe przeliczane dla regionu i standardu.
-- **SEO**: statyczne HTML, meta i Open Graph, canonical, sitemap.xml, robots.txt, dane strukturalne (Organization, WebSite, WebApplication, Article, BreadcrumbList, FAQPage) oraz poradniki z treścią.
+**Live:** https://goldipl.github.io/brickly-planner/
 
-## Stos
+## Features
 
-Next.js 16 (App Router, statyczny eksport) · React 19 · TypeScript · SCSS (Sass modules: `@use`, mapy tokenów, mixiny)
+- **House construction calculator**: scope from shell (SSO) to turnkey, building shape, wall technology, foundations, roof, heating, heat recovery ventilation, PV, utility connections and permits, prices for all 16 Polish voivodeships.
+- **Apartment renovation calculator**: 4 preset scopes and 18 work types; block of flats, tenement or new build.
+- **Schedule** in working days with stage dependencies, technological breaks (concrete curing, screed drying), a winter break for outdoor work, and lead times for windows and kitchens.
+- **Planner**: projects stored in localStorage, editable tasks, automatic shifting of dependent tasks, planned vs actual budget, progress tracking, JSON import/export, CSV (Excel) export and print to PDF.
+- **Price list 2026**: unit prices recalculated for region and finish standard.
+- **SEO**: static HTML, meta and Open Graph tags, canonical URLs, sitemap.xml, robots.txt, structured data (Organization, WebSite, WebApplication, Article, BreadcrumbList, FAQPage) and guide articles.
 
-## Uruchomienie
+## Tech stack
+
+Next.js 16 (App Router, static export) · React 19 · TypeScript · SCSS (Sass modules with `@use`, token maps and mixins)
+
+## Getting started
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm run build      # statyczna strona w katalogu out/
-npm run preview    # podgląd out/
-npm test           # testy silnika wyceny (node --test)
+npm run build      # static site in out/
+npm run preview    # serve out/ locally
+npm test           # cost engine tests (node --test)
 npm run typecheck
 ```
 
-## Struktura
+## Project structure
 
 ```
-app/                 strony (App Router), sitemap, robots, manifest, ikona
-components/          interfejs: nagłówek, stopka, SEO/JSON-LD, Gantt
-  calculator/        formularze kalkulatorów i panel wyników
-  planner/           planer harmonogramu
+app/                 pages (App Router), sitemap, robots, manifest
+components/          UI: header, footer, SEO/JSON-LD, Gantt chart
+  calculator/        calculator forms and results panel
+  home/              home page hero, quick estimate, price ticker, animations
+  planner/           schedule planner
 lib/
-  data.ts            baza cen (materiał + robocizna), regiony, standardy
-  engine.ts          silnik: geometria budynku, etapy, wycena, harmonogram
-  dates.ts           dni robocze, przerwa zimowa
-  export.ts          CSV i konwersja wyceny na projekt planera
-  site.ts            domena, nawigacja, meta SEO
-styles/              SCSS: _tokens, _mixins, _base, _layout, _components,
-                     _calculator, _gantt, _planner, _print
-public/              logo, obraz OG, apple-touch-icon
+  data.ts            price database (materials + labour), regions, standards
+  engine.ts          engine: building geometry, stages, pricing, scheduling
+  dates.ts           working days, winter break
+  export.ts          CSV export and estimate-to-project conversion
+  site.ts            site URL, base path, navigation, SEO metadata
+styles/              SCSS partials: _tokens, _mixins, _base, _layout, _components,
+                     _calculator, _gantt, _planner, _home, _print
+design/icons/        SVG sources for the favicon and app icons
+scripts/             icon generator, static export post-processing
+public/              logos, hero photo, OG image, generated icons
 ```
 
-## Aktualizacja cen
+## Updating prices
 
-Ceny bazowe są w `lib/data.ts` (`PRICES`). Żeby szybko skorygować cały cennik do bieżącego rynku,
-zmień `INDEX.mat` i `INDEX.lab`, a potem zaktualizuj `PRICE_DATE` i `PRICE_LABEL`.
-Test `npm test` sprawdza, czy koszt m² mieści się w rynkowych widełkach.
+Base prices live in `lib/data.ts` (`PRICES`). To shift the whole price list to the current market level,
+change `INDEX.mat` and `INDEX.lab`, then update `PRICE_DATE` and `PRICE_LABEL`.
+`npm test` checks that the cost per m² stays within market ranges.
 
-## Favicon i ikony aplikacji
+## Favicon and app icons
 
-Źródła są w `design/icons/`:
+Sources are in `design/icons/`:
 
-- `favicon-16.svg` i `favicon-32.svg` to wersje uproszczone pod siatkę pikseli,
-- `icon.svg` to zaokrąglony kwadrat (favicon SVG i ikona PWA),
-- `app-icon.svg` to pełny kwadrat bez przezroczystości (iOS i Android maskable).
+- `favicon-16.svg` and `favicon-32.svg` are simplified, pixel-grid-aligned versions,
+- `icon.svg` is the rounded square (SVG favicon and PWA icon),
+- `app-icon.svg` is a full-bleed square without transparency (iOS and Android maskable).
 
-Po zmianie któregoś z nich uruchom `npm run icons`. Skrypt wygeneruje w `public/`: `favicon.ico` (16/32/48),
-`icon.svg`, ikony iOS 120/152/167/180 px (+ `apple-touch-icon.png`) oraz ikony Android 192/512 px w wariantach `any` i `maskable`.
+After editing any of them run `npm run icons`. It generates in `public/`: `favicon.ico` (16/32/48),
+`icon.svg`, iOS icons 120/152/167/180 px (+ `apple-touch-icon.png`) and Android icons 192/512 px in `any` and `maskable` variants.
 
-## Domena i wdrożenie
+## Deployment
 
-Domyślna domena w canonical, sitemap i Open Graph to `https://brickly-planner.pl`.
-Zmień ją w `lib/site.ts` albo ustaw `NEXT_PUBLIC_SITE_URL` przy buildzie.
-Katalog `out/` możesz wgrać na dowolny hosting statyczny (Vercel, Netlify, Cloudflare Pages, GitHub Pages).
+### GitHub Pages
+
+Every push to `main` runs `.github/workflows/nextjs.yml`: it installs dependencies, runs the tests, builds the static site
+and publishes `out/` to GitHub Pages. The site is served from a subpath (`/brickly-planner`), so the workflow sets:
+
+- `NEXT_PUBLIC_BASE_PATH` – the subpath, used for `basePath` and for plain asset URLs (`asset()` in `lib/site.ts`),
+- `NEXT_PUBLIC_SITE_URL` – the full site URL, used for canonical links, Open Graph, the sitemap and robots.txt.
+
+Both values come from `actions/configure-pages`, so nothing is hard-coded. In the repository settings,
+**Settings → Pages → Source** must be set to **GitHub Actions**.
+
+### Other hosting
+
+Without these variables the build targets the root of a custom domain (`https://brickly-planner.pl` by default, see `lib/site.ts`).
+The `out/` folder can be uploaded to any static host (Vercel, Netlify, Cloudflare Pages).
+
+## Credits
+
+Hero photo by [Phil Hearing](https://unsplash.com/photos/house-construction-with-scaffolding-and-brickwork-6lvui3Ak-eA) on Unsplash (Unsplash License).

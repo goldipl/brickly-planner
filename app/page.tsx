@@ -13,7 +13,7 @@ import { Faq, JsonLd } from '@/components/Seo';
 import { PRICE_LABEL, PRICES } from '@/lib/data';
 import { estimateHouse, unitPrice } from '@/lib/engine';
 import * as fmt from '@/lib/format';
-import { SITE_NAME, SITE_URL, pageMetadata } from '@/lib/site';
+import { SITE_NAME, SITE_URL, asset, pageMetadata } from '@/lib/site';
 
 const DESCRIPTION =
   'Darmowy kalkulator kosztów budowy domu i remontu mieszkania z harmonogramem prac. Aktualne ceny materiałów i robocizny w Polsce (2026), 16 województw, eksport do Excela i PDF.';
@@ -105,11 +105,11 @@ export default function HomePage() {
             <picture>
               <source
                 type="image/webp"
-                srcSet="/hero/budowa-1280.webp 1280w, /hero/budowa-1920.webp 1920w, /hero/budowa-2400.webp 2400w"
+                srcSet={[1280, 1920, 2400].map((w) => `${asset(`/hero/budowa-${w}.webp`)} ${w}w`).join(', ')}
                 sizes="100vw"
               />
               <img
-                src="/hero/budowa-1600.jpg"
+                src={asset('/hero/budowa-1600.jpg')}
                 alt="Dom w budowie: ceglane ściany parteru, rusztowania i drewniana więźba dachowa"
                 width={PHOTO.w}
                 height={PHOTO.h}

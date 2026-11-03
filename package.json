@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/fix-export.mjs",
     "preview": "npx serve@14 out",
     "typecheck": "tsc --noEmit",
     "test": "node --test lib/",
