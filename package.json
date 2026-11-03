@@ -10,7 +10,7 @@
     "postbuild": "node scripts/fix-export.mjs",
     "preview": "npx serve@14 out",
     "typecheck": "tsc --noEmit",
-    "test": "node --test lib/",
+    "test": "node --test \"lib/**/*.test.ts\"",
     "icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
