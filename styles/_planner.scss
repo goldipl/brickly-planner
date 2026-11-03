@@ -1,0 +1,153 @@
+@use 'mixins' as *;
+
+.planner-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .input { max-width: 320px; }
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+
+  @include below(820px) { grid-template-columns: 1fr 1fr; }
+}
+
+.kpi {
+  @include card-surface;
+  padding: 16px 18px;
+
+  > span {
+    @include label-caps;
+    letter-spacing: .08em;
+    color: var(--muted);
+  }
+
+  strong {
+    display: block;
+    font: 750 1.4rem/1.2 var(--font-head);
+    margin-top: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.progress {
+  height: 8px;
+  background: var(--bg-soft);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+
+  i { display: block; height: 100%; background: var(--sage); }
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+  min-width: 880px;
+
+  th {
+    @include label-caps(.74rem);
+    letter-spacing: .06em;
+    text-align: left;
+    color: var(--muted);
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 6px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .input { padding: 8px 9px; font-size: .88rem; border-radius: 8px; }
+  input[type='number'] { text-align: right; }
+
+  .w-name { min-width: 220px; }
+  .w-date { width: 150px; }
+  .w-num { width: 92px; }
+  .w-money { width: 120px; }
+
+  tr.overdue td:first-child { box-shadow: inset 3px 0 0 var(--danger); }
+  tr.done td:first-child { box-shadow: inset 3px 0 0 var(--sage); }
+}
+
+.task-end {
+  font-size: .82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: 4px;
+
+  button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    display: grid;
+    place-items: center;
+
+    &:hover { color: var(--brick); border-color: var(--brick); }
+    &.del:hover { color: var(--danger); border-color: var(--danger); }
+  }
+
+  svg { width: 16px; height: 16px; }
+}
+
+/* ---------- cennik ---------- */
+.price-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr 1fr;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 24px;
+
+  @include below($bp-lg) { grid-template-columns: 1fr 1fr; }
+  @include below($bp-sm) { grid-template-columns: 1fr; }
+}
+
+.price-group { margin-bottom: 24px; }
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+  font-variant-numeric: tabular-nums;
+
+  caption {
+    text-align: left;
+    font: 700 1.2rem/1.3 var(--font-head);
+    padding: 0 0 12px;
+    color: var(--text);
+  }
+
+  th {
+    @include label-caps(.75rem);
+    letter-spacing: .06em;
+    text-align: left;
+    color: var(--muted);
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .num { text-align: right; white-space: nowrap; }
+}

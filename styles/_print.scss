@@ -1,0 +1,40 @@
+@media print {
+  .site-header,
+  .site-footer,
+  .calc-form,
+  .result-actions,
+  .tabs,
+  .no-print,
+  .planner-bar,
+  .row-actions,
+  .toast {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .calc { grid-template-columns: 1fr; }
+  .tab-panel[hidden] { display: block !important; margin-top: 24px; }
+
+  .panel,
+  .result-hero {
+    break-inside: avoid;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .result-hero .mini div { background: #f3f3f3; }
+  .gantt { min-width: 0; }
+  .cost-table .item-row { display: table-row !important; }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}

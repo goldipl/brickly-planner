@@ -1,0 +1,33 @@
+$bp-xs: 420px;
+$bp-sm: 560px;
+$bp-md: 760px;
+$bp-lg: 920px;
+$bp-xl: 1040px;
+
+@mixin below($bp) {
+  @media (max-width: $bp) {
+    @content;
+  }
+}
+
+@mixin card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+@mixin label-caps($size: .78rem) {
+  font: 600 #{$size}/1 var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+// pasek-cegiełka: motyw z logo
+@mixin brick-marker($w: 18px, $h: 6px, $color: currentColor) {
+  content: '';
+  width: $w;
+  height: $h;
+  border-radius: 2px;
+  background: $color;
+  flex-shrink: 0;
+}

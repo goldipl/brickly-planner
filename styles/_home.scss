@@ -1,0 +1,770 @@
+@use 'mixins' as *;
+
+// Strona główna: hero ze zdjęciem i adnotacjami, taśma cen, animacje odsłaniania.
+
+$hero-ink: #0E1117;
+$ease-out: cubic-bezier(.2, .8, .2, 1);
+$grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+@mixin mono-caps($size: .7rem) {
+  font: 500 #{$size}/1.2 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero-photo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: min(calc(100svh - 68px), 900px);
+  display: flex;
+  align-items: center;
+  background: $hero-ink;
+  color: #F4EFE8;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-zoom {
+  position: absolute;
+  inset: 0;
+  animation: hero-settle 2.6s $ease-out both;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+
+    @include below($bp-lg) { object-position: 70% 0%; }
+  }
+}
+
+// cieniowanie: ciemny bok pod tekst, ciepły refleks, ziarno jak na odbitce
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba($hero-ink, .94) 0%, rgba($hero-ink, .82) 30%, rgba($hero-ink, .32) 58%, rgba($hero-ink, .06) 100%),
+    linear-gradient(0deg, rgba($hero-ink, .75) 0%, transparent 28%),
+    radial-gradient(ellipse at 72% 30%, rgba(200, 85, 61, .18), transparent 60%);
+
+  @include below($bp-lg) {
+    background:
+      linear-gradient(180deg, rgba($hero-ink, .15) 0%, rgba($hero-ink, .55) 22%, rgba($hero-ink, .9) 42%, rgba($hero-ink, .96) 100%);
+  }
+
+  // siatka kreślarska tylko po stronie tekstu
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 56px 28px;
+    mask-image: linear-gradient(90deg, #000 0%, #000 30%, transparent 55%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: $grain;
+    opacity: .14;
+    mix-blend-mode: overlay;
+  }
+}
+
+.hero-inner {
+  position: relative;
+  width: 100%;
+  padding-top: 48px;
+  padding-bottom: 56px;
+
+  // na wąskich ekranach górę kadru zostawiamy dla zdjęcia
+  @include below($bp-lg) { padding-top: clamp(150px, 28vh, 260px); }
+}
+
+.hero-copy {
+  max-width: 640px;
+}
+
+.hero-title {
+  margin: 0 0 20px;
+  color: #FFF;
+  font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+  line-height: .98;
+  letter-spacing: -.035em;
+  font-weight: 800;
+
+  .line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: .06em;
+
+    > span {
+      display: inline-block;
+      animation: line-up 1s $ease-out both;
+      animation-delay: calc(.15s + var(--d, 0s));
+    }
+  }
+
+  .accent > span {
+    color: #F08E70;
+    position: relative;
+
+    // „cegła” podkreślenia dokładana po napisie
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: .04em;
+      height: .11em;
+      border-radius: 2px;
+      background: var(--amber);
+      transform-origin: left;
+      animation: draw-x .8s $ease-out both;
+      animation-delay: 1.15s;
+    }
+  }
+}
+
+.hero-kicker {
+  @include mono-caps(.72rem);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #F2A93B;
+  margin-bottom: 22px;
+  letter-spacing: .16em;
+  animation: fade-up .7s $ease-out both;
+
+  &::before {
+    content: '';
+    width: 26px;
+    height: 7px;
+    border-radius: 2px;
+    background: currentColor;
+    box-shadow: 8px 10px 0 -1px #C8553D;
+  }
+}
+
+.hero-lead {
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: rgba(244, 239, 232, .82);
+  max-width: 56ch;
+  margin-bottom: 24px;
+  animation: fade-up .8s $ease-out both;
+  animation-delay: .7s;
+}
+
+.hero-alt {
+  display: inline-flex;
+  margin-top: 16px;
+  font-size: .92rem;
+  color: rgba(244, 239, 232, .7);
+  animation: fade-up .8s $ease-out both;
+  animation-delay: 1.1s;
+
+  a {
+    color: #F4EFE8;
+    margin-left: 6px;
+  }
+}
+
+.photo-credit {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  @include mono-caps(.62rem);
+  color: rgba(255, 255, 255, .55);
+  text-decoration: none;
+
+  &:hover { color: #FFF; }
+}
+
+/* ---------- szybka wycena ---------- */
+.quick {
+  position: relative;
+  background: rgba(17, 21, 29, .94);
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 18px;
+  padding: 20px 22px 22px;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .8);
+  animation: fade-up .9s $ease-out both;
+  animation-delay: .9s;
+
+  // znak firmowy: schodkowe cegiełki w rogu
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 26px;
+    width: 34px;
+    height: 6px;
+    border-radius: 2px;
+    background: #C8553D;
+    box-shadow: 10px -8px 0 -1px #F2A93B;
+  }
+}
+
+.quick-body {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 22px;
+
+  @include below(640px) { grid-template-columns: 1fr; gap: 0; }
+}
+
+.quick-out {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding-left: 22px;
+  border-left: 1px dashed rgba(255, 255, 255, .14);
+
+  @include below(640px) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.quick-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .06);
+  margin-bottom: 16px;
+
+  button {
+    flex: 1;
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 10px;
+    font: 600 .88rem/1 var(--font-body);
+    color: rgba(244, 239, 232, .65);
+    background: transparent;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+
+    &[aria-selected='true'] {
+      background: #F4EFE8;
+      color: $hero-ink;
+    }
+  }
+}
+
+.quick-area {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 14px;
+
+  > span {
+    @include mono-caps(.68rem);
+    color: rgba(244, 239, 232, .6);
+  }
+
+  output {
+    font: 700 1.5rem/1 var(--font-head);
+    color: #FFF;
+    font-variant-numeric: tabular-nums;
+
+    small { font-size: .9rem; font-weight: 500; color: rgba(244, 239, 232, .6); }
+  }
+
+  input { grid-column: 1 / -1; }
+}
+
+// suwak w formie miarki budowlanej
+.ruler {
+  --fill: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 34px;
+  margin: 4px 0 0;
+  background:
+    linear-gradient(90deg, #C8553D var(--fill), transparent var(--fill)) 0 100% / 100% 3px no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .55) 0 1px, transparent 1px 50px) 0 100% / 100% 16px no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .25) 0 1px, transparent 1px 10px) 0 100% / 100% 8px no-repeat;
+  cursor: ew-resize;
+
+  &::-webkit-slider-runnable-track { height: 34px; background: transparent; }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 34px;
+    border-radius: 3px;
+    background: #F4EFE8;
+    border: 4px solid #C8553D;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .5);
+  }
+
+  &::-moz-range-track { height: 34px; background: transparent; }
+
+  &::-moz-range-thumb {
+    width: 6px;
+    height: 26px;
+    border-radius: 3px;
+    background: #F4EFE8;
+    border: 4px solid #C8553D;
+  }
+
+  &:focus-visible { outline: 2px solid #F2A93B; outline-offset: 4px; }
+}
+
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  @include below(640px) { margin-bottom: 16px; }
+
+  button {
+    border: 1px solid rgba(255, 255, 255, .16);
+    background: transparent;
+    color: rgba(244, 239, 232, .8);
+    border-radius: 999px;
+    padding: 7px 10px;
+    font: 600 .78rem/1 var(--font-body);
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+
+    &:hover { border-color: rgba(255, 255, 255, .4); }
+
+    &[aria-checked='true'] {
+      background: #C8553D;
+      border-color: #C8553D;
+      color: #FFF;
+    }
+  }
+}
+
+.quick-result {
+  display: grid;
+  gap: 6px;
+  padding-top: 4px;
+
+  @include below(640px) {
+    padding: 14px 0 0;
+    border-top: 1px dashed rgba(255, 255, 255, .14);
+  }
+
+  strong {
+    font: 800 clamp(1.9rem, 3.4vw, 2.3rem)/1 var(--font-head);
+    letter-spacing: -.03em;
+    color: #FFF;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.quick-caption {
+  @include mono-caps(.66rem);
+  color: #F2A93B;
+}
+
+.quick-meta {
+  font: 500 .82rem/1.3 var(--font-mono);
+  color: rgba(244, 239, 232, .62);
+}
+
+.quick-cta {
+  width: 100%;
+
+  svg { transition: transform .2s; }
+  &:hover svg { transform: translateX(4px); }
+}
+
+/* ---------- adnotacje na zdjęciu ---------- */
+.annotations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  @include below(1100px) { display: none; }
+}
+
+.annotations-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
+  .dot {
+    fill: #FFF;
+    stroke: #C8553D;
+    stroke-width: 3;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pop .45s $ease-out both;
+    animation-delay: calc(1.3s + var(--i) * .35s);
+  }
+
+  .pulse {
+    fill: none;
+    stroke: #FFF;
+    stroke-width: 1.5;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ping 2.4s ease-out infinite;
+    animation-delay: calc(1.8s + var(--i) * .35s);
+  }
+
+  .leader {
+    fill: none;
+    stroke: rgba(255, 255, 255, .85);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw-line .7s $ease-out forwards;
+    animation-delay: calc(1.45s + var(--i) * .35s);
+  }
+
+  // znacznik końca linii, jak na rysunku wymiarowym
+  .leader-tick {
+    stroke: #F2A93B;
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0;
+    animation: fade-in .3s ease-out forwards;
+    animation-delay: calc(2s + var(--i) * .35s);
+  }
+}
+
+// karta adnotacji: numer pozycji | nazwa, kwota, notka
+.annotation {
+  position: absolute;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;
+  min-width: 220px;
+  max-width: 270px;
+  background: rgba(13, 16, 22, .9);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 10px;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .9);
+  overflow: hidden;
+  opacity: 0;
+  animation: tag-in .6s $ease-out forwards;
+  animation-delay: calc(1.85s + var(--i) * .35s);
+}
+
+.annotation-index {
+  display: grid;
+  place-items: start center;
+  padding: 11px 9px 0;
+  font: 600 .7rem/1 var(--font-mono);
+  color: #FFF;
+  background: #C8553D;
+  letter-spacing: .04em;
+}
+
+.annotation-body {
+  display: grid;
+  gap: 4px;
+  padding: 10px 14px 11px 12px;
+}
+
+.annotation-label {
+  @include mono-caps(.6rem);
+  color: rgba(244, 239, 232, .62);
+  white-space: nowrap;
+}
+
+.annotation-value {
+  font: 800 1.3rem/1.05 var(--font-head);
+  letter-spacing: -.02em;
+  color: #FFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.annotation-note {
+  margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, .14);
+  font: 400 .68rem/1.35 var(--font-mono);
+  color: #F2A93B;
+}
+
+/* =========================================================
+   TAŚMA CEN
+   ========================================================= */
+.ticker {
+  display: flex;
+  align-items: stretch;
+  background: #10141B;
+  color: #F4EFE8;
+  border-top: 3px solid #C8553D;
+  overflow: hidden;
+}
+
+.ticker-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+  @include mono-caps(.68rem);
+  color: #F2A93B;
+  background: #161B24;
+  border-right: 1px solid rgba(255, 255, 255, .08);
+  z-index: 1;
+
+  @include below($bp-sm) { display: none; }
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5FB58F;
+  box-shadow: 0 0 0 0 rgba(95, 181, 143, .6);
+  animation: live 2s infinite;
+}
+
+.ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: marquee 70s linear infinite;
+
+  .ticker:hover & { animation-play-state: paused; }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 26px 15px 0;
+    white-space: nowrap;
+    font-size: .88rem;
+
+    &::before {
+      content: '';
+      width: 12px;
+      height: 5px;
+      border-radius: 1px;
+      background: #C8553D;
+      margin-right: 4px;
+    }
+
+    &:nth-child(3n + 2)::before { background: #F2A93B; }
+    &:nth-child(3n)::before { background: rgba(255, 255, 255, .5); }
+
+    span { color: rgba(244, 239, 232, .7); }
+    b { font: 600 .86rem/1 var(--font-mono); color: #FFF; }
+  }
+}
+
+/* =========================================================
+   SEKCJE
+   ========================================================= */
+.stat strong { font-variant-numeric: tabular-nums; }
+
+.stat-bar {
+  display: block;
+  height: 4px;
+  width: 42px;
+  margin: 14px 0 10px;
+  border-radius: 2px;
+  background: var(--brick);
+  transform-origin: left;
+
+  .stat:nth-child(2) & { background: var(--amber); }
+  .stat:nth-child(3) & { background: var(--ink); }
+  .stat:nth-child(4) & { background: var(--sage); }
+}
+
+// podgląd planu: paski Gantta układane jak cegły
+.preview {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+
+  @include below($bp-lg) { grid-template-columns: 1fr; gap: 72px; }
+}
+
+.preview-list {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  gap: 18px;
+  counter-reset: out;
+
+  li {
+    counter-increment: out;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 14px;
+
+    &::before {
+      content: counter(out, decimal-leading-zero);
+      font: 600 .8rem/1 var(--font-mono);
+      color: var(--brick);
+      padding-top: 5px;
+      border-top: 2px solid var(--brick);
+    }
+  }
+
+  strong { display: block; color: var(--text); margin-bottom: 2px; }
+  span { color: var(--muted); font-size: .95rem; }
+}
+
+.mock.build .mock-track i {
+  transform-origin: left;
+}
+
+.js .mock.build:not(.in) .mock-track i { transform: scaleX(0); }
+
+.mock.build.in .mock-track i {
+  animation: brick-lay .7s $ease-out both;
+  animation-delay: calc(.25s + var(--i) * .14s);
+}
+
+// oś „jak to działa” wypełniana podczas odsłaniania
+.steps-rail {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin: -8px 0 34px;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--brick), var(--amber));
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.8s $ease-out .2s;
+  }
+
+  &.in::after { transform: scaleX(1); }
+
+  @include below($bp-lg) { display: none; }
+}
+
+/* ---------- odsłanianie przy przewijaniu ---------- */
+.js [data-reveal] {
+  transition: opacity .8s $ease-out, transform .8s $ease-out;
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.js [data-reveal]:not(.in) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* ---------- paralaksa (scroll-driven animations, tam gdzie są wspierane) ---------- */
+@supports (animation-timeline: scroll()) {
+  .hero-media {
+    animation: hero-parallax linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+}
+
+/* ---------- klatki ---------- */
+@keyframes hero-settle {
+  from { transform: scale(1.12); filter: saturate(.6) brightness(.8); }
+  to { transform: scale(1); filter: none; }
+}
+
+@keyframes hero-parallax {
+  to { transform: translateY(14%); }
+}
+
+@keyframes line-up {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes draw-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0); }
+  70% { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ping {
+  0% { opacity: .9; transform: scale(.4); }
+  80%, 100% { opacity: 0; transform: scale(1.6); }
+}
+
+@keyframes tag-in {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes live {
+  70% { box-shadow: 0 0 0 8px rgba(95, 181, 143, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(95, 181, 143, 0); }
+}
+
+@keyframes brick-lay {
+  0% { transform: scaleX(0); }
+  70% { transform: scaleX(1.04); }
+  100% { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-viewport { overflow-x: auto; }
+  .js [data-reveal]:not(.in),
+  .js .mock.build:not(.in) .mock-track i { opacity: 1; transform: none; }
+  .annotations-lines .leader { stroke-dashoffset: 0; }
+  .annotation,
+  .annotations-lines .dot,
+  .annotations-lines .leader-tick { opacity: 1; }
+  .annotations-lines .pulse { display: none; }
+  .steps-rail::after { transform: scaleX(1); }
+}

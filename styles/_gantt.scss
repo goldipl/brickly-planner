@@ -1,0 +1,136 @@
+@use 'mixins' as *;
+
+$label-w: 220px;
+$label-w-sm: 150px;
+
+.gantt-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gantt {
+  position: relative;
+  font-size: .82rem;
+  min-width: 680px;
+}
+
+.gantt-head,
+.gantt-row {
+  display: grid;
+  grid-template-columns: $label-w 1fr;
+
+  @include below($bp-sm) { grid-template-columns: $label-w-sm 1fr; }
+}
+
+.gantt-head {
+  border-bottom: 1px solid var(--border);
+  height: 30px;
+}
+
+.gantt-months {
+  position: relative;
+  height: 100%;
+
+  span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid var(--border);
+    padding: 6px 0 0 6px;
+    color: var(--muted);
+    font-size: .74rem;
+    white-space: nowrap;
+  }
+}
+
+.gantt-row {
+  min-height: 38px;
+  align-items: center;
+  border-bottom: 1px dashed var(--border);
+
+  &:last-child { border-bottom: 0; }
+}
+
+.gantt-label {
+  padding-right: 12px;
+  line-height: 1.25;
+  color: var(--text-soft);
+  overflow: hidden;
+
+  small {
+    display: block;
+    color: var(--muted);
+    font-size: .72rem;
+  }
+}
+
+.gantt-track {
+  position: relative;
+  height: 100%;
+  min-height: 38px;
+}
+
+.gantt-grid span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--border);
+  opacity: .55;
+}
+
+.gantt-bar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  border-radius: 6px;
+  min-width: 6px;
+  background: var(--bar-indoor);
+  overflow: hidden;
+
+  &.outdoor { background: var(--bar-outdoor); }
+  &.formal { background: var(--bar-formal); }
+
+  .done {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: rgba(255, 255, 255, .35);
+  }
+
+  // przerwa technologiczna (wiązanie betonu, schnięcie wylewek)
+  &.lag {
+    background: repeating-linear-gradient(45deg, var(--border-strong) 0 4px, transparent 4px 8px);
+    opacity: .7;
+    height: 8px;
+  }
+}
+
+.gantt-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: $label-w;
+  right: 0;
+  pointer-events: none;
+  z-index: 2;
+
+  @include below($bp-sm) { left: $label-w-sm; }
+}
+
+.gantt-today {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--sage);
+
+  &::before {
+    content: 'dziś';
+    position: absolute;
+    top: 33px; // pod wierszem z nazwami miesięcy
+    left: 5px;
+    font-size: .68rem;
+    color: var(--sage);
+    font-weight: 700;
+  }
+}

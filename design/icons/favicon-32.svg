@@ -1,0 +1,8 @@
+<!-- Wersja 32/48 px: grubsze kreski i całkowite współrzędne, żeby cegły nie rozmywały się -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#1D2433"/>
+  <path d="M6.5 14 16 6.5l9.5 7.5" fill="none" stroke="#E07A5F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="8" y="16" width="9" height="3" rx="1" fill="#FFFFFF"/>
+  <rect x="12" y="20" width="10" height="3" rx="1" fill="#E07A5F"/>
+  <rect x="17" y="24" width="8" height="3" rx="1" fill="#F2A93B"/>
+</svg>

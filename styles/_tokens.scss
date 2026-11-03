@@ -1,0 +1,96 @@
+// Brickly Planner — tokeny designu
+// Cegła (terakota) + grafit + piaskowe tło + akcent bursztynowy
+
+$light: (
+  bg: #FAF7F2,
+  bg-soft: #F3EDE4,
+  surface: #FFFFFF,
+  surface-2: #FBF9F6,
+  border: #E7DFD3,
+  border-strong: #D6CBBB,
+  text: #1D2433,
+  text-soft: #3A4253,
+  muted: #5E6676,
+  brick: #C8553D,
+  brick-strong: #A8412C,
+  brick-tint: #FBE9E3,
+  ink: #1D2433,
+  ink-tint: #E6E9F0,
+  amber: #F2A93B,
+  amber-ink: #9A5F0E,
+  amber-tint: #FDF1DC,
+  sage: #3E8E6B,
+  sage-tint: #E2F1EA,
+  danger: #C23B3B,
+  on-brick: #FFFFFF,
+  hero-bg: #1D2433,
+  hero-text: #FAF7F2,
+  bar-indoor: #1D2433,
+  shadow: (0 10px 30px -12px rgba(29, 36, 51, .18), 0 2px 6px rgba(29, 36, 51, .05)),
+  shadow-lg: 0 30px 60px -24px rgba(29, 36, 51, .28),
+);
+
+$dark: (
+  bg: #11141B,
+  bg-soft: #161A23,
+  surface: #1A1F29,
+  surface-2: #1F2531,
+  border: #2A3140,
+  border-strong: #3A4356,
+  text: #EEE9E2,
+  text-soft: #D3CEC6,
+  muted: #A2AABA,
+  brick: #E07A5F,
+  brick-strong: #EB9179,
+  brick-tint: #3A231E,
+  ink: #EEE9E2,
+  ink-tint: #252C3A,
+  amber: #F5B955,
+  amber-ink: #F5B955,
+  amber-tint: #3A2F1C,
+  sage: #5FB58F,
+  sage-tint: #1C3229,
+  danger: #F07171,
+  on-brick: #1A0F0B,
+  hero-bg: #232A38,
+  hero-text: #EEE9E2,
+  bar-indoor: #8C9BB8,
+  shadow: 0 10px 30px -12px rgba(0, 0, 0, .6),
+  shadow-lg: 0 30px 60px -24px rgba(0, 0, 0, .7),
+);
+
+@mixin theme($map) {
+  @each $name, $value in $map {
+    --#{$name}: #{$value};
+  }
+}
+
+:root {
+  @include theme($light);
+  --bar-formal: #F2A93B;
+  --bar-outdoor: var(--brick);
+  --bar-done: var(--sage);
+  --focus: #F2A93B;
+  --font-head: var(--ff-head), 'Segoe UI', system-ui, sans-serif;
+  --font-body: var(--ff-body), 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --r-sm: 8px;
+  --r: 14px;
+  --r-lg: 22px;
+  --shadow-sm: 0 1px 2px rgba(29, 36, 51, .06), 0 1px 1px rgba(29, 36, 51, .04);
+  --wrap: 1180px;
+  color-scheme: light;
+}
+
+// motyw systemowy, dopóki użytkownik nie wybierze ręcznie
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include theme($dark);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  @include theme($dark);
+  color-scheme: dark;
+}
